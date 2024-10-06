@@ -5,11 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zen</title>
-    <link rel="shortcut icon" type="image/jpg" href="~/favicon.ico"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
-    
+
     <style>
         /* Style for the particles container */
         #particles-js {
@@ -29,15 +28,6 @@
             overflow: hidden; /* Prevent scrolling */
         }
 
-        #header {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        #header img {
-            max-width: 150px; /* Adjust the logo size */
-        }
-
         .main {
             position: absolute; /* Change to absolute for better centering */
             top: 50%; /* Center vertically */
@@ -52,9 +42,21 @@
             user-select: none; /* Prevent text selection */
         }
 
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-30px); /* Start above the viewport */
+                opacity: 0; /* Start hidden */
+            }
+            100% {
+                transform: translateY(0); /* End at original position */
+                opacity: 1; /* Fully visible */
+            }
+        }
+
         h1 {
-            font-size: 2em; /* Adjusted size for consistency */
+            font-size: 4em;
             margin: 0;
+            animation: slideInFromTop 1s ease-in-out forwards; /* Slide and fade-in animation */
         }
 
         .phrase {
@@ -77,6 +79,20 @@
             flex-direction: column; /* Stack inputs vertically */
             align-items: center; /* Center items */
             margin-top: 20px; /* Add some margin on top */
+            opacity: 0; /* Start hidden for animation */
+            animation: slideInFromBottom 1s ease-out forwards; /* Slide in animation */
+            animation-delay: 0.5s; /* Delay for slide-in */
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                transform: translateY(30px); /* Start below */
+                opacity: 0; /* Start hidden */
+            }
+            to {
+                transform: translateY(0); /* Move to original position */
+                opacity: 1; /* Fully visible */
+            }
         }
 
         .search-input {
@@ -114,8 +130,36 @@
             background-color: #5c00a2; /* Darker shade on hover */
         }
 
-        .desc {
-            margin-top: 20px; /* Space above description */
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0; /* Margin above the navbar */
+            z-index: 1; /* Ensure it's above the particles */
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px; /* Space between tabs */
+            border: 2px solid transparent; /* Initial border */
+            border-radius: 5px; /* Rounded corners */
+            transition: border-color 0.3s, color 0.3s; /* Transition effect */
+        }
+
+        .nav a:hover {
+            border-color: #7000cd; /* Change border color on hover */
+            color: #7000cd; /* Change text color on hover */
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            z-index: 1;
         }
 
         /* Bottom Right Navigation */
@@ -139,60 +183,52 @@
 
         .bottom-nav a:hover {
             border-color: #7000cd; /* Change border color on hover */
+            background-color: transparent; /* Ensure no background color */
             color: #5c00a2; /* Optional: Change text color on hover */
             border-width: 2px; /* Stroke weight on hover */
-        }
-
-        #footer {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            text-align: center;
         }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
 
-    <div id="header">
-        <img src="logo.gif" alt="Logo">
-    </div>
-
     <div class="main">
         <h1>Zen v1.00</h1>
-        <h2>Search the Web and use the BEST static proxy!</h2>
 
         <div class="phrase" id="random-phrase"></div>
         <div class="search-bar">
             <form id="uv-form" onsubmit="return handleSearch(event);">
                 <input id="uv-search-engine" value="https://www.google.com/search?q=%s" type="hidden"/> 
-                <input id="uv-address" type="text" placeholder="Search Google or type an URL" class="search-input" required/>
-                <button type="submit" class="search-button">Search</button>
+                <input id="uv-address" type="text" placeholder="Search..." class="search-input" required/>
+                <button type="submit" class="search-button">Search</button> <!-- Added Search button -->
             </form>
         </div>
-        <div class="desc">
+        <div class="desc left-margin">
             <p id="uv-error"></p>
             <pre id="uv-error-code"></pre>
         </div>
-
-        <div class="bottom-nav">
-            <a href="https://discord.gg/zJhPJYJCeJ" target="_blank" class="fa-brands fa-discord"></a>
-            <a href="https://github.com/TheTIW/UV-Static" target="_blank" class="fa-brands fa-github"></a>
-            <a href="https://starttiw.org" target="_blank" class="fa-solid fa-cloud"></a>
-        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Bottom Right Navigation -->
+    <div class="bottom-nav">
+        <a href="/static/">Search</a>
+        <a href="/static/games.html">Games</a> <!-- Added Games tab -->
+    </div>
+
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-VHVNHMYGN3"></script>
+       <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="uv/uv.bundle.js" defer></script>
     <script src="uv/uv.config.js" defer></script>
     <script src="register-sw.js" defer></script>
     <script src="search.js" defer></script>
     <script src="index.js" defer></script>
     <script src="error.js" defer></script>
-
     <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-VHVNHMYGN3');
+
         const phrases = [
             "Ermmmm... what the sigma?",
             "I love interstellar!",
@@ -238,41 +274,21 @@
                     type: "circle",
                     stroke: {
                         width: 0,
-                        color: "#000000"
+                        color: "#7000cd"
                     },
-                    polygon: {
-                        nb_sides: 5
-                    },
-                    image: {
-                        src: "img/github.svg",
-                        width: 100,
-                        height: 100
-                    }
                 },
                 opacity: {
                     value: 0.5,
                     random: false,
-                    anim: {
-                        enable: false,
-                        speed: 1,
-                        opacity_min: 0.1,
-                        sync: false
-                    }
                 },
                 size: {
                     value: 5,
                     random: true,
-                    anim: {
-                        enable: false,
-                        speed: 40,
-                        size_min: 0.1,
-                        sync: false
-                    }
                 },
                 line_linked: {
                     enable: true,
                     distance: 150,
-                    color: "#7000cd",
+                    color: "#ffffff",
                     opacity: 0.4,
                     width: 1
                 },
@@ -280,15 +296,7 @@
                     enable: true,
                     speed: 6,
                     direction: "none",
-                    random: false,
-                    straight: false,
                     out_mode: "out",
-                    bounce: false,
-                    attract: {
-                        enable: false,
-                        rotateX: 600,
-                        rotateY: 1200
-                    }
                 }
             },
             interactivity: {
@@ -305,37 +313,22 @@
                     resize: true
                 },
                 modes: {
-                    grab: {
-                        distance: 400,
-                        line_linked: {
-                            opacity: 1
-                        }
-                    },
-                    bubble: {
-                        distance: 400,
-                        size: 40,
-                        duration: 2,
-                        opacity: 8,
-                        speed: 3
-                    },
                     repulse: {
                         distance: 200,
                         duration: 0.4
-                    },
-                    push: {
-                        particles_nb: 4
-                    },
-                    remove: {
-                        particles_nb: 2
                     }
                 }
             },
             retina_detect: true
         });
-    </script>
 
-    <footer id="footer">
-        <p>© 2024 Zen. All Rights Reserved.</p>
-    </footer>
+        function handleSearch(event) {
+            event.preventDefault(); // Prevent default form submission
+            const query = document.getElementById('uv-address').value;
+            const searchEngine = document.getElementById('uv-search-engine').value;
+            window.open(searchEngine.replace('%s', encodeURIComponent(query)), '_self'); // Open search
+            return false; // Prevent form submission
+        }
+    </script>
 </body>
 </html>
