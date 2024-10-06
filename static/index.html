@@ -223,13 +223,7 @@
             "Code is art.",
             "Javascript 😍",
             "R.I.P Project Unblocked.",
-            "Sick burn bro!",
-            "13,000 lines of code!",
-            "Best proxy!",
-            "Honey? Where's my supersuit?",
-            "Define interface.",
-            "Game page soon?",
-            "Sub to Dustie Fn!",
+            "Sick burn!",
             "Go Guardian got nothin on me!"
         ];
 
@@ -309,7 +303,8 @@
             event.preventDefault(); // Prevent default form submission
             const query = document.getElementById('uv-address').value;
             const searchEngine = document.getElementById('uv-search-engine').value;
-            window.open(searchEngine.replace('%s', encodeURIComponent(query)), '_self'); // Open search
+            const url = search(query, searchEngine); // Use the search function from search.js
+            window.open(url, '_self'); // Open search
             return false; // Prevent form submission
         }
     </script>
