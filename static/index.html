@@ -317,13 +317,14 @@
             retina_detect: true
         });
 
-        function handleSearch(event) {
-            event.preventDefault(); // Prevent default form submission
-            const query = document.getElementById('uv-address').value;
-            const searchEngine = document.getElementById('uv-search-engine').value;
-            window.open(searchEngine.replace('%s', encodeURIComponent(query)), '_self'); // Open search
-            return false; // Prevent form submission
-        }
+      function handleSearch(event) {
+        event.preventDefault(); // Prevent default form submission
+        const query = document.getElementById('uv-address').value; // Get the search query
+        const searchEngine = document.getElementById('uv-search-engine').value; // Get the search engine URL
+        const formattedURL = searchEngine.replace('%s', encodeURIComponent(query)); // Format the URL with the query
+        window.location.href = formattedURL; // Redirect to the formatted URL
+        return false; // Prevent form submission
+    }
     </script>
     <script src="uv/uv.bundle.js" defer></script>
     <script src="uv/uv.config.js" defer></script>
